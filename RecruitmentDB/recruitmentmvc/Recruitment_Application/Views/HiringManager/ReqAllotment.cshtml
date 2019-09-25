@@ -1,0 +1,160 @@
+﻿@model List<ClassLibrary_Recruitment.proc_display_pending_requests_Result>
+@{
+    ViewBag.Title = "HireManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/perfect-scrollbar/perfect-scrollbar.css">
+
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/css/util.css">
+        <link rel="stylesheet" type="text/css" href="~/css/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    </head>
+
+    <div style="text-align:center; color:#D10516; font-family: 'Patua One', cursive;" class="page-header">
+        <h2>Requests</h2>
+    </div>
+
+@if(Session["p_hireJava"].ToString()!="0"||Session["p_hireDotNet"].ToString()!="0"||Session["p_hireBA"].ToString()!="0")
+{
+    <div style="color:#D10516;text-align:center;font-family: 'Source Sans Pro', sans-serif;">
+        <h4>
+            On calculation, the system has noticed that there was a shortage of employees.  <br />
+            We need an additional @Session["p_hireJava"].ToString() Java Developer(s) , @Session["p_hireDotNet"].ToString() DotNet Developer(s) and @Session["p_hireBA"].ToString()  Business Analyst(s) <br />
+            Raise request?
+        </h4> <br />
+        <button class="btn btn-danger" id="ImageHosting" onclick="location.href = '@Url.Action("UpdateHRTable","HiringManager")'; return false;">Send Request</button>
+
+    </div>
+}
+    
+
+<div class="container-table100">
+    <div class="wrap-table100">
+        <div class="table100 ver2 m-b-110">
+            <table id="EmployeeList" class="tablesorter">
+                <thead class="table100-head">
+                    <tr class="row100 head">
+                        <th class="cell100 column1" style="text-align:center; width:16.6666666667%;">Request Id</th>
+                        <th class="cell100 column1" style="text-align:center; width:16.6666666667%;">Business Unit</th>
+                        <th class="cell100 column1" style="text-align:center; width:16.6666666667%;">Java Developers</th>
+                        <th class="cell100 column1" style="text-align:center; width:16.6666666667%;">.Net Developers</th>
+                        <th class="cell100 column1" style="text-align:center; width:16.6666666667%;">Business Analyst</th>
+                        <th class="cell100 column1" style="text-align:center; width:16.6666666667%;"></th>
+                    </tr>
+                </thead>
+                <tbody class="table100-body js-pscroll">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="row100 body">
+                            <td class="cell100" style="text-align:center; width:16.6666666667%">@item.RequestId</td>
+                            <td class="cell100" style="text-align:center; width:16.6666666667%;">@item.BId</td>
+                            <td class="cell100" style="text-align:center; width:16.6666666667%;">@item.JavaDevReq</td>
+                            <td class="cell100" style="text-align:center; width:16.6666666667%;">@item.DotNetDevReq</td>
+                            <td class="cell100" style="text-align:center; width:16.6666666667%;">@item.BAReq</td>
+                            <td class="cell100" style="text-align:center; width:16.6666666667%;">
+                            <button class="btn btn-danger" onclick="location.href = '@Url.Action("NReqAllotment","HiringManager", new {p_bid = item.BId, p_rid = item.RequestId,p_jreq=item.JavaDevReq,p_dreq=item.DotNetDevReq,p_bareq=item.BAReq })'; return false;">Assign</button></td>
+                            @*<td>@Html.ActionLink("Assign", "NAllotment", new { @class = "btn btn-primary btn-large", onclick = "return alert('Alloted!')", p_eid = item.EmpId, p_type = item.Designation })*@
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.tablesorter.addParser({
+                id: 'money',
+                is: function (s) {
+                    return false;
+                },
+                format: function (s) {
+                    //alert(s.replace('$', '').replace('£', '').replace(/,/g, ''));
+                    return s.replace('$', '').replace('£', '').replace(/,/g, '');
+                },
+                type: 'numeric'
+            });
+            $("#EmployeeList").tablesorter({
+                sortList: [[0, 0], [2, 1]],
+                headers: {
+                    5: { sorter: false },
+                    //3: { sorter: false }
+                }
+            });
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts/tablesorter/jquery.metadata.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tablesorter/jquery.tablesorter.min.js")" type="text/javascript"></script>
+}
+<!--===============================================================================================-->
+<script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/vendor/bootstrap/js/popper.js"></script>
+<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script>
+    $('.js-pscroll').each(function () {
+        var ps = new PerfectScrollbar(this);
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+    if (performance.navigation.type==2) {
+        location.reload(true);
+    }
+
+    $("#ImageHosting").click(function() {
+         alert("Request Raised Succesfully to the HR");
+    });
+</script>
+<!--===============================================================================================-->
+<script src="~/js/main.js"></script>
+
+
+@*<h2>HireManager</h2>
+<div>
+    <br />
+    <br />
+    <table class="table table-striped">
+        <tr>
+            <th>Request Id</th>
+            <th>Business Unit ID</th>
+            <th>Required java Developers</th>
+            <th>Required .Net Developers</th>
+            <th>Required Business Analyst</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RequestId</td>
+                <td>@item.BId</td>
+                <td>@item.JavaDevReq</td>
+                <td>@item.DotNetDevReq</td>
+                <td>@item.BAReq</td>
+                <td><button class="btn btn-primary" onclick="location.href = '@Url.Action("NReqAllotment","HiringManager", new {p_bid = item.BId, p_rid = item.RequestId })'; return false;">Assign</button></td>
+            </tr>
+        }
+    </table>
+</div>*@
+@**@ 

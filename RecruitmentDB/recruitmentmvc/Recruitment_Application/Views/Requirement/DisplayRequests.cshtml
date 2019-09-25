@@ -1,0 +1,91 @@
+﻿@model List<ClassLibrary_Recruitment.proc_display_requrests_Result>
+@{
+    ViewBag.Title = "DisplayRequests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<head>
+    <title>Table V04</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/perfect-scrollbar/perfect-scrollbar.css">
+
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet">
+    <!--===============================================================================================-->
+</head>
+
+<body>
+    <div style="text-align:center; color:#D10516; font-family: 'Patua One', cursive;" class="page-header">
+        <h2>Pending Requests</h2>
+    </div>
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100 ver2 m-b-110" style="background-color: #393939;">
+                <div class="table100-head">
+                    <table>
+                        <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column1" style="text-align:center;">Request ID</th>
+                                <th class="cell100 column2" style="text-align:center;">Java Developers</th>
+                                <th class="cell100 column3" style="text-align:center;">.Net Developers</th>
+                                <th class="cell100 column4" style="text-align:center;">Business Analysts</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="table100-body js-pscroll">
+                    <table>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="row100 body">
+                                    <td class="cell100 column1" style="text-align:center;">@item.RequestId</td>
+                                    <td class="cell100 column3" style="text-align:center;">@item.JavaDevReq</td>
+                                    <td class="cell100 column4" style="text-align:center;">@item.DotNetDevReq</td>
+                                    <td class="cell100 column5" style="text-align:center;">@item.BAReq</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--===============================================================================================-->
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function () {
+            var ps = new PerfectScrollbar(this);
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });
+
+
+    </script>
+    <!--===============================================================================================-->
+    <script src="~/js/main.js"></script>
+</body>

@@ -1,0 +1,35 @@
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.dll.config
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.dll
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.pdb
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.dll
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.xml
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csproj.CoreCompileInputs.cache
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csproj.CopyComplete
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.dll
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.pdb
+C:\Users\socgend08\Desktop\Dotnet training\project\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csprojAssemblyReference.cache
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.dll.config
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.dll
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.pdb
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.dll
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.xml
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csprojAssemblyReference.cache
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csproj.CoreCompileInputs.cache
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csproj.CopyComplete
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.dll
+C:\Users\socgend08\Desktop\Dotnet training\recruitmentDB\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.pdb
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.dll.config
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.dll
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\ClassLibrary_Recruitment.pdb
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.dll
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.xml
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csproj.CoreCompileInputs.cache
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.csproj.CopyComplete
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.dll
+C:\Users\socgend13\Desktop\ProjectUI2\UpdatedRepoRecruitment\UpdatedRepo\RecruitmentDB\ClassLibrary_Recruitment\ClassLibrary_Recruitment\obj\Debug\ClassLibrary_Recruitment.pdb

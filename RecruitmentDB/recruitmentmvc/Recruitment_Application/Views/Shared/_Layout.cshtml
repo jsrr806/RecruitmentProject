@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    @RenderSection("css", required: false)
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="" width="130" height="80" />
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    @if (ViewBag.Title == "DisplayRequests")
+                    {
+                        <li><a href="@Url.Action("GetTeamMembers","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Team</a></li>
+                        <li><a href="@Url.Action("ReqInput","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Request</a></li>
+                    }
+                    else if (ViewBag.Title == "ReqInput")
+                    {
+                        <li><a href="@Url.Action("GetTeamMembers","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Team</a></li>
+                        <li><a href="@Url.Action("DisplayRequests","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Pending Requests</a></li>
+                    }
+                    else if (ViewBag.Title == "Search_Details" || ViewBag.Title == "Allotment")
+                    {
+                        <li><a href="@Url.Action("ReqAllotment","HiringManager")"><span class="glyphicon glyphicon-tasks"></span>Pending Requests</a></li>
+                    }
+                    else if (ViewBag.Title == "GetTeamMembers")
+                    {
+                        <li><a href="@Url.Action("DisplayRequests","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Pending Requests</a></li>
+                        <li><a href="@Url.Action("ReqInput","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Request</a></li>
+                    }
+                    else if (ViewBag.Title == "GetAssignedEmployeeList")
+                    {
+                        <li><a href="@Url.Action("ReqAllotment","HiringManager")"><span class="glyphicon glyphicon-tasks"></span>Requests</a></li>
+                    }
+                    else if (ViewBag.Title == "Search_Team_Employee")
+                    {
+                        <li><a href="@Url.Action("GetTeamMembers","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Team</a></li>
+                        <li><a href="@Url.Action("DisplayRequests","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Pending Requests</a></li>
+                        <li><a href="@Url.Action("ReqInput","Requirement")"><span class="glyphicon glyphicon-tasks"></span>Request</a></li>
+                    }
+                    else if (ViewBag.Title == "HireManager")
+                    {
+                        <li><a href="@Url.Action("GetAssignedEmployeeList","HiringManager")"><span class="glyphicon glyphicon-tasks"></span>Assigned Employees</a></li>
+                    }
+                    else if (ViewBag.Title == "Search_Assigned_Employee_Details")
+                    {
+                        <li><a href="@Url.Action("ReqAllotment","HiringManager")"><span class="glyphicon glyphicon-tasks"></span>Pending Requests</a></li>
+                    }
+
+                    <li><a href="@Url.Action("LogOut","Login")"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

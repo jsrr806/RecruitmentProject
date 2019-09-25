@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "SortExperience";
+}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+
+<h2>Employee details</h2>
+
+
+<form method="post" action="Search_Details">
+    <input type="text" placeholder="Search Results" name="p_search" /><br /><br />
+    <button class="btn btn-primary" type="submit">Search</button><br /><br />
+</form>
+
+<form method="post" action="Sort_Details">
+    <div class="input-group form-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <select class="form-control" name="p_search">
+            <option value="Java">Java Developers</option>
+            <option value="Dotnet">DotNet Developers</option>
+            <option value="BA">Business Analysts</option>
+        </select>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Filter</button><br /><br />
+</form>
+
+<form method="post" action="SortExperience">
+    <div class="input-group form-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <select class="form-control" name="p_exp">
+            <option value="asc">Ascending</option>
+            <option value="dsc">Descending</option>
+        </select>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Filter by Experience</button><br /><br />
+</form>
+
+
+<table class="table table-striped">
+    <tr>
+        <th>Emp Id</th>
+        <th>Emp Name</th>
+        <th>Buiseness Line</th>
+        <th>Designation</th>
+        <th>Status</th>
+        <th onclick="GetSortExpResults(string p_text)">
+            <span id="asc">Up</span>
+            <span id="dsc">Down</span>
+            Experience
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.EmpId</td>
+            <td>@item.EmpName</td>
+            <td>@item.BId</td>
+            <td>@item.Designation</td>
+            <td>@item.Status</td>
+            <td>@item.JobExperience</td>
+            <td><button class="btn btn-primary" onclick="location.href = '@Url.Action("NAllotment","HiringManager", new {p_eid = item.EmpId, p_type = item.Designation })'; return false;">Assign</button></td>
+        </tr>
+    }
+</table>
+<script>
+    function GetSortExpResults(string exp)
+    {
+
+    }
+</script>

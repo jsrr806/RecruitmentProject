@@ -1,0 +1,19 @@
+﻿html, body {
+    background-image: url('requirement_image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+}
+
+label {
+    font-size: larger;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#l1 {
+    font-size: x-large;
+    font-family: Algerian;
+    color: red;
+}

@@ -1,0 +1,69 @@
+﻿@model List<ClassLibrary_Recruitment.Sort_Details_Result>
+
+@{
+    ViewBag.Title = "Sort_Details";
+}
+
+
+<h2>Employee details</h2>
+
+
+<form method="post" action="Search_Details">
+    <input type="text" placeholder="Search Results" name="p_search" /><br /><br />
+    <button class="btn btn-primary" type="submit">Search</button><br /><br />
+</form>
+
+<form method="post" action="Sort_Details">
+    <div class="input-group form-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <select class="form-control" name="p_search">
+            <option value="Java">Java Developers</option>
+            <option value="Dotnet">DotNet Developers</option>
+            <option value="BA">Business Analysts</option>
+        </select>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Filter</button><br /><br />
+</form>
+
+<form method="post" action="SortExperience">
+    <div class="input-group form-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <select class="form-control" name="p_exp">
+            <option value="asc">Ascending</option>
+            <option value="dsc">Descending</option>
+        </select>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Filter by Experience</button><br /><br />
+</form>
+
+
+
+<table class="table table-striped">
+    <tr>
+        <th>Emp Id</th>
+        <th>Emp Name</th>
+        <th>Buiseness Line</th>
+        <th>Designation</th>
+        <th>Status</th>
+        <th>JobExperience</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.EmpId</td>
+            <td>@item.EmpName</td>
+            <td>@item.BId</td>
+            <td>@item.Designation</td>
+            <td>@item.Status</td>
+            <td>@item.JobExperience</td>
+            <td><button class="btn btn-primary" onclick="location.href = '@Url.Action("NAllotment","HiringManager", new {p_eid = item.EmpId, p_type = item.Designation })'; return false;">Assign</button></td>
+        </tr>
+    }
+</table>

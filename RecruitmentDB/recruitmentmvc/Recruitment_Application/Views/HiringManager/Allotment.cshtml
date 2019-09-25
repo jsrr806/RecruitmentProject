@@ -1,0 +1,159 @@
+﻿@model List<ClassLibrary_Recruitment.proc_display_available_employees_Result>
+
+@{
+    ViewBag.Title = "Allotment";
+}
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/perfect-scrollbar/perfect-scrollbar.css">
+
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/css/util.css">
+        <link rel="stylesheet" type="text/css" href="~/css/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    </head>
+
+<div style="text-align:center; color:#D10516; font-family: 'Patua One', cursive;" class="page-header">
+    <h2>Employee Details</h2>
+</div>
+<div style="color:#D10516;text-align:center;font-family: 'Source Sans Pro', sans-serif;">
+    <h4>Business ID @Session["p_bid"].ToString() requires : @*</br></br>*@ @Session["p_jreq"].ToString() -Java Developer(s),@*</br></br>*@@Session["p_dreq"].ToString() - DotNet Developer(s) , and @*</br></br>*@ @Session["p_bareq"] - Business Analyst(s), currently </h4> <br />
+    @if (Session["p_empName"] != null)
+    {
+        <h4 style="">@Session["p_empName"].ToString() having experties in @Session["p_type"] has been assigned to Business Unit @Session["p_bid"] successfully</h4> <br />
+    }
+
+</div>
+<form method="post" action="Search_Details">
+    <div class="input-group">
+        <input required type="text" class="form-control" placeholder="Search Results" name="p_search" style="border: 2px solid;">
+        <span class="input-group-btn">
+            <button class="btn btn-danger" type="submit">Search</button>
+        </span>
+    </div>
+</form>
+
+
+
+<div class="container-table100">
+    <div class="wrap-table100">
+        <div class="table100 ver2 m-b-110">
+            <table id="EmployeeList" class="tablesorter">
+                <thead class="table100-head">
+                    <tr class="row100 head">
+                        <th class="cell100 column1" style="text-align:center; width:14.2857142857%;">Emp Id</th>
+                        <th class="cell100 column1" style="text-align:center; width:14.2857142857%;">Emp Name</th>
+                        <th class="cell100 column1" style="text-align:center; width:14.2857142857%;">Business Line</th>
+                        <th class="cell100 column1" style="text-align:center; width:14.2857142857%;">Designation</th>
+                        <th class="cell100 column1" style="text-align:center; width:14.2857142857%;">Status</th>
+                        <th class="cell100 column1" style="text-align:center; width:14.2857142857%;">JobExperience</th>
+                        <th class="cell100 column1" style="text-align:center; width:14.2857142857%;"></th>
+                    </tr>
+                </thead>
+                <tbody class="table100-body js-pscroll">
+                    @foreach (var item in Model)
+                    {
+                    <tr class="row100 body">
+                        <td class="cell100" style="text-align:center; width:14.2857142857%;">@item.EmpId</td>
+                        <td class="cell100" style="text-align:center; width:14.2857142857%;">@item.EmpName</td>
+                        <td class="cell100" style="text-align:center; width:14.2857142857%;">@item.BId</td>
+                        <td class="cell100" style="text-align:center; width:14.2857142857%;">@item.Designation</td>
+                        <td class="cell100" style="text-align:center; width:14.2857142857%;">@item.Status</td>
+                        <td class="cell100" style="text-align:center; width:14.2857142857%;">@item.JobExperience</td>
+
+                        @if ((@Session["p_jreq"].ToString() == "0" && item.Designation == "Java") || (@Session["p_dreq"].ToString() == "0" && item.Designation == "DotNet") || (@Session["p_bareq"].ToString() == "0" && item.Designation == "BA"))
+                        {
+                            <td class="cell100" style="text-align:center; width:14.2857142857%;">
+                                <button id="disabled_btn" class="btn btn-danger disabled"; return false;">
+                                    Assign
+                                </button>
+                            </td>
+                            
+                            
+                        }
+                        else
+                        {
+                            <td class="cell100" style="text-align:center; width:14.2857142857%;">
+                                <button class="btn btn-danger" onclick="location.href = '@Url.Action("NAllotment","HiringManager",
+                                new {p_eid = item.EmpId,p_empName=item.EmpName, p_type = item.Designation,p_bid=Session["p_bid"],p_pbid= item.BId, p_rid = Session["p_rid"],p_jreq=Session["p_jreq"],p_dreq=Session["p_dreq"],p_bareq=Session["p_bareq"] })'; return false;">
+                                    Assign
+                                </button>
+                            </td>
+                        }
+
+
+                        @*<td>@Html.ActionLink("Assign", "NAllotment", new { @class = "btn btn-primary btn-large", onclick = "return alert('Alloted!')", p_eid = item.EmpId, p_type = item.Designation })*@
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.tablesorter.addParser({
+                id: 'money',
+                is: function (s) {
+                    return false;
+                },
+                format: function (s) {
+                    //alert(s.replace('$', '').replace('£', '').replace(/,/g, ''));
+                    return s.replace('$', '').replace('£', '').replace(/,/g, '');
+                },
+                type: 'numeric'
+            });
+            $("#EmployeeList").tablesorter({
+                sortList: [[0, 0], [2, 1]],
+                headers: {
+                    6: { sorter: false },
+                    //3: { sorter: false }
+                }
+            });
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts/tablesorter/jquery.metadata.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tablesorter/jquery.tablesorter.min.js")" type="text/javascript"></script>
+}
+<!--===============================================================================================-->
+<script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/vendor/bootstrap/js/popper.js"></script>
+<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script>
+    $('.js-pscroll').each(function () {
+        var ps = new PerfectScrollbar(this);
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+
+    if (performance.navigation.type == 2) {
+        location.reload(true);
+    }
+
+</script>
+<!--===============================================================================================-->
+<script src="~/js/main.js"></script>
+}
+
+

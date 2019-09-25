@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RecruitmentDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'RecruitmentDB.dbo.AssignedEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AssignedEmployees">
+    <Key>
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="EmpName" />
+      <PropertyRef Name="Previous_BId" />
+      <PropertyRef Name="Current_BId" />
+      <PropertyRef Name="Designation" />
+    </Key>
+    <Property Name="EmpId" Type="int" Nullable="false" />
+    <Property Name="EmpName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Previous_BId" Type="int" Nullable="false" />
+    <Property Name="Current_BId" Type="int" Nullable="false" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BusinessUnitReqTable">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BId" Type="int" Nullable="false" />
+    <Property Name="JavaDevReq" Type="int" />
+    <Property Name="DotNetDevReq" Type="int" />
+    <Property Name="BAReq" Type="int" />
+  </EntityType>
+  <EntityType Name="BusinessUnitTable">
+    <Key>
+      <PropertyRef Name="BId" />
+    </Key>
+    <Property Name="BId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BName" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeDetails">
+    <Key>
+      <PropertyRef Name="EmpId" />
+    </Key>
+    <Property Name="EmpId" Type="int" Nullable="false" />
+    <Property Name="EmpName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="BId" Type="int" Nullable="false" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="JobExperience" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LoginCredentials">
+    <Key>
+      <PropertyRef Name="EmpId" />
+    </Key>
+    <Property Name="EmpId" Type="int" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmpType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmailId" Type="varchar" MaxLength="50" />
+    <Property Name="EPassword" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_Hireingmanager">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="java" Type="int" />
+    <Property Name="dotnet" Type="int" />
+    <Property Name="ba" Type="int" />
+  </EntityType>
+  <Association Name="FK_AssignedEmployees_EmployeeDetails">
+    <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="1" />
+    <End Role="AssignedEmployees" Type="Self.AssignedEmployees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetails">
+        <PropertyRef Name="EmpId" />
+      </Principal>
+      <Dependent Role="AssignedEmployees">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessUnitReqTable_BusinessUnitTable">
+    <End Role="BusinessUnitTable" Type="Self.BusinessUnitTable" Multiplicity="1" />
+    <End Role="BusinessUnitReqTable" Type="Self.BusinessUnitReqTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusinessUnitTable">
+        <PropertyRef Name="BId" />
+      </Principal>
+      <Dependent Role="BusinessUnitReqTable">
+        <PropertyRef Name="BId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeDetails_EmployeeDetails">
+    <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="1" />
+    <End Role="EmployeeDetails1" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetails">
+        <PropertyRef Name="EmpId" />
+      </Principal>
+      <Dependent Role="EmployeeDetails1">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="proc_add_bunit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="bname" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="proc_add_employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="eid" Type="int" Mode="In" />
+    <Parameter Name="ename" Type="varchar" Mode="In" />
+    <Parameter Name="bid" Type="int" Mode="In" />
+    <Parameter Name="des" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="bit" Mode="In" />
+    <Parameter Name="exp" Type="int" Mode="In" />
+  </Function>
+  <Function Name="proc_delete_BReqTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="proc_display_available_employees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="proc_display_businessreq" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="proc_display_emp_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="proc_display_history_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="proc_display_pending_requests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="proc_display_requrests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p_bid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="proc_display_team" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p_bid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="proc_insert_history_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p_eid" Type="int" Mode="In" />
+    <Parameter Name="p_ename" Type="varchar" Mode="In" />
+    <Parameter Name="p_pbid" Type="int" Mode="In" />
+    <Parameter Name="p_cbid" Type="int" Mode="In" />
+    <Parameter Name="p_des" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="proc_insert_req" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="rid" Type="int" Mode="InOut" />
+    <Parameter Name="bid" Type="int" Mode="In" />
+    <Parameter Name="jreq" Type="int" Mode="In" />
+    <Parameter Name="dreq" Type="int" Mode="In" />
+    <Parameter Name="breq" Type="int" Mode="In" />
+  </Function>
+  <Function Name="proc_login_signin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="eid" Type="int" Mode="In" />
+    <Parameter Name="pass" Type="varchar" Mode="In" />
+    <Parameter Name="etype" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="proc_login_signup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="eid" Type="int" Mode="In" />
+    <Parameter Name="pass" Type="varchar" Mode="In" />
+    <Parameter Name="etype" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="proc_requiredEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="reqJava" Type="int" Mode="InOut" />
+    <Parameter Name="reqDotNet" Type="int" Mode="InOut" />
+    <Parameter Name="reqBA" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="proc_search_assigned_employee_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p_text" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="proc_Search_Employee_Team" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p_text" Type="varchar" Mode="In" />
+    <Parameter Name="p_bid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="proc_update_tables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="rid" Type="int" Mode="In" />
+    <Parameter Name="bid" Type="int" Mode="In" />
+    <Parameter Name="eid" Type="int" Mode="In" />
+    <Parameter Name="etype" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="proc_updateHRTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="reqJava" Type="int" Mode="In" />
+    <Parameter Name="reqDotNet" Type="int" Mode="In" />
+    <Parameter Name="reqBA" Type="int" Mode="In" />
+  </Function>
+  <Function Name="proc_user_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Search_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="input_text" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sort_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="input_text" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SortExperience" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="exp" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="RecruitmentDBModelStoreContainer">
+    <EntitySet Name="BusinessUnitReqTable" EntityType="Self.BusinessUnitReqTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusinessUnitTable" EntityType="Self.BusinessUnitTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginCredentials" EntityType="Self.LoginCredentials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Hireingmanager" EntityType="Self.tbl_Hireingmanager" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AssignedEmployees" EntityType="Self.AssignedEmployees" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AssignedEmployees].[EmpId] AS [EmpId], 
+    [AssignedEmployees].[EmpName] AS [EmpName], 
+    [AssignedEmployees].[Previous_BId] AS [Previous_BId], 
+    [AssignedEmployees].[Current_BId] AS [Current_BId], 
+    [AssignedEmployees].[Designation] AS [Designation]
+    FROM [dbo].[AssignedEmployees] AS [AssignedEmployees]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_AssignedEmployees_EmployeeDetails" Association="Self.FK_AssignedEmployees_EmployeeDetails">
+      <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+      <End Role="AssignedEmployees" EntitySet="AssignedEmployees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessUnitReqTable_BusinessUnitTable" Association="Self.FK_BusinessUnitReqTable_BusinessUnitTable">
+      <End Role="BusinessUnitTable" EntitySet="BusinessUnitTable" />
+      <End Role="BusinessUnitReqTable" EntitySet="BusinessUnitReqTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeDetails_EmployeeDetails" Association="Self.FK_EmployeeDetails_EmployeeDetails">
+      <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+      <End Role="EmployeeDetails1" EntitySet="EmployeeDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

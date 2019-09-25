@@ -1,0 +1,777 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RecruitmentDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'RecruitmentDB.dbo.AssignedEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AssignedEmployees">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="EmpName" />
+            <PropertyRef Name="Previous_BId" />
+            <PropertyRef Name="Current_BId" />
+            <PropertyRef Name="Designation" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Previous_BId" Type="int" Nullable="false" />
+          <Property Name="Current_BId" Type="int" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BusinessUnitReqTable">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BId" Type="int" Nullable="false" />
+          <Property Name="JavaDevReq" Type="int" />
+          <Property Name="DotNetDevReq" Type="int" />
+          <Property Name="BAReq" Type="int" />
+        </EntityType>
+        <EntityType Name="BusinessUnitTable">
+          <Key>
+            <PropertyRef Name="BId" />
+          </Key>
+          <Property Name="BId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeDetails">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BId" Type="int" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="JobExperience" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginCredentials">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" />
+          <Property Name="EPassword" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_Hireingmanager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="java" Type="int" />
+          <Property Name="dotnet" Type="int" />
+          <Property Name="ba" Type="int" />
+        </EntityType>
+        <Association Name="FK_AssignedEmployees_EmployeeDetails">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="1" />
+          <End Role="AssignedEmployees" Type="Self.AssignedEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="AssignedEmployees">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessUnitReqTable_BusinessUnitTable">
+          <End Role="BusinessUnitTable" Type="Self.BusinessUnitTable" Multiplicity="1" />
+          <End Role="BusinessUnitReqTable" Type="Self.BusinessUnitReqTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessUnitTable">
+              <PropertyRef Name="BId" />
+            </Principal>
+            <Dependent Role="BusinessUnitReqTable">
+              <PropertyRef Name="BId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetails_EmployeeDetails">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="1" />
+          <End Role="EmployeeDetails1" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeDetails1">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="proc_add_bunit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="bname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_add_employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eid" Type="int" Mode="In" />
+          <Parameter Name="ename" Type="varchar" Mode="In" />
+          <Parameter Name="bid" Type="int" Mode="In" />
+          <Parameter Name="des" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="bit" Mode="In" />
+          <Parameter Name="exp" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_delete_BReqTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="proc_display_available_employees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="proc_display_businessreq" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="proc_display_emp_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="proc_display_history_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="proc_display_pending_requests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="proc_display_requrests" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_bid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_display_team" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_bid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_insert_history_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_eid" Type="int" Mode="In" />
+          <Parameter Name="p_ename" Type="varchar" Mode="In" />
+          <Parameter Name="p_pbid" Type="int" Mode="In" />
+          <Parameter Name="p_cbid" Type="int" Mode="In" />
+          <Parameter Name="p_des" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_insert_req" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rid" Type="int" Mode="InOut" />
+          <Parameter Name="bid" Type="int" Mode="In" />
+          <Parameter Name="jreq" Type="int" Mode="In" />
+          <Parameter Name="dreq" Type="int" Mode="In" />
+          <Parameter Name="breq" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_login_signin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eid" Type="int" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+          <Parameter Name="etype" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_login_signup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="eid" Type="int" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+          <Parameter Name="etype" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_requiredEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="reqJava" Type="int" Mode="InOut" />
+          <Parameter Name="reqDotNet" Type="int" Mode="InOut" />
+          <Parameter Name="reqBA" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="proc_search_assigned_employee_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_text" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_Search_Employee_Team" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_text" Type="varchar" Mode="In" />
+          <Parameter Name="p_bid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_update_tables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rid" Type="int" Mode="In" />
+          <Parameter Name="bid" Type="int" Mode="In" />
+          <Parameter Name="eid" Type="int" Mode="In" />
+          <Parameter Name="etype" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="proc_updateHRTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="reqJava" Type="int" Mode="In" />
+          <Parameter Name="reqDotNet" Type="int" Mode="In" />
+          <Parameter Name="reqBA" Type="int" Mode="In" />
+        </Function>
+        <Function Name="proc_user_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Search_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="input_text" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Sort_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="input_text" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SortExperience" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="exp" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="RecruitmentDBModelStoreContainer">
+          <EntitySet Name="BusinessUnitReqTable" EntityType="Self.BusinessUnitReqTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessUnitTable" EntityType="Self.BusinessUnitTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginCredentials" EntityType="Self.LoginCredentials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Hireingmanager" EntityType="Self.tbl_Hireingmanager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssignedEmployees" EntityType="Self.AssignedEmployees" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AssignedEmployees].[EmpId] AS [EmpId], 
+    [AssignedEmployees].[EmpName] AS [EmpName], 
+    [AssignedEmployees].[Previous_BId] AS [Previous_BId], 
+    [AssignedEmployees].[Current_BId] AS [Current_BId], 
+    [AssignedEmployees].[Designation] AS [Designation]
+    FROM [dbo].[AssignedEmployees] AS [AssignedEmployees]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AssignedEmployees_EmployeeDetails" Association="Self.FK_AssignedEmployees_EmployeeDetails">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="AssignedEmployees" EntitySet="AssignedEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessUnitReqTable_BusinessUnitTable" Association="Self.FK_BusinessUnitReqTable_BusinessUnitTable">
+            <End Role="BusinessUnitTable" EntitySet="BusinessUnitTable" />
+            <End Role="BusinessUnitReqTable" EntitySet="BusinessUnitReqTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetails_EmployeeDetails" Association="Self.FK_EmployeeDetails_EmployeeDetails">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="EmployeeDetails1" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RecruitmentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BusinessUnitReqTable">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BId" Type="Int32" Nullable="false" />
+          <Property Name="JavaDevReq" Type="Int32" />
+          <Property Name="DotNetDevReq" Type="Int32" />
+          <Property Name="BAReq" Type="Int32" />
+          <NavigationProperty Name="BusinessUnitTable" Relationship="Self.FK_BusinessUnitReqTable_BusinessUnitTable" FromRole="BusinessUnitReqTable" ToRole="BusinessUnitTable" />
+        </EntityType>
+        <EntityType Name="BusinessUnitTable">
+          <Key>
+            <PropertyRef Name="BId" />
+          </Key>
+          <Property Name="BId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BusinessUnitReqTables" Relationship="Self.FK_BusinessUnitReqTable_BusinessUnitTable" FromRole="BusinessUnitTable" ToRole="BusinessUnitReqTable" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BId" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="JobExperience" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmployeeDetails1" Relationship="Self.FK_EmployeeDetails_EmployeeDetails" FromRole="EmployeeDetails" ToRole="EmployeeDetails1" />
+          <NavigationProperty Name="EmployeeDetail1" Relationship="Self.FK_EmployeeDetails_EmployeeDetails" FromRole="EmployeeDetails1" ToRole="EmployeeDetails" />
+          <NavigationProperty Name="AssignedEmployees" Relationship="RecruitmentDBModel.FK_AssignedEmployees_EmployeeDetails" FromRole="EmployeeDetail" ToRole="AssignedEmployee" />
+        </EntityType>
+        <Association Name="FK_BusinessUnitReqTable_BusinessUnitTable">
+          <End Role="BusinessUnitTable" Type="Self.BusinessUnitTable" Multiplicity="1" />
+          <End Role="BusinessUnitReqTable" Type="Self.BusinessUnitReqTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessUnitTable">
+              <PropertyRef Name="BId" />
+            </Principal>
+            <Dependent Role="BusinessUnitReqTable">
+              <PropertyRef Name="BId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDetails_EmployeeDetails">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="1" />
+          <End Role="EmployeeDetails1" Type="Self.EmployeeDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeDetails1">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RecruitmentDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BusinessUnitReqTables" EntityType="Self.BusinessUnitReqTable" />
+          <EntitySet Name="BusinessUnitTables" EntityType="Self.BusinessUnitTable" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
+          <AssociationSet Name="FK_BusinessUnitReqTable_BusinessUnitTable" Association="Self.FK_BusinessUnitReqTable_BusinessUnitTable">
+            <End Role="BusinessUnitTable" EntitySet="BusinessUnitTables" />
+            <End Role="BusinessUnitReqTable" EntitySet="BusinessUnitReqTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDetails_EmployeeDetails" Association="Self.FK_EmployeeDetails_EmployeeDetails">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="EmployeeDetails1" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <FunctionImport Name="proc_add_bunit">
+          <Parameter Name="bname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_add_employee">
+            <Parameter Name="eid" Mode="In" Type="Int32" />
+            <Parameter Name="ename" Mode="In" Type="String" />
+            <Parameter Name="bid" Mode="In" Type="Int32" />
+            <Parameter Name="des" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="Boolean" />
+            <Parameter Name="exp" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_delete_BReqTable">
+          </FunctionImport>
+          <FunctionImport Name="proc_display_businessreq" ReturnType="Collection(RecruitmentDBModel.proc_display_businessreq_Result)" />
+          <FunctionImport Name="proc_display_emp_table" ReturnType="Collection(RecruitmentDBModel.proc_display_emp_table_Result)" />
+          <FunctionImport Name="proc_insert_req">
+            <Parameter Name="rid" Mode="InOut" Type="Int32" />
+            <Parameter Name="bid" Mode="In" Type="Int32" />
+            <Parameter Name="jreq" Mode="In" Type="Int32" />
+            <Parameter Name="dreq" Mode="In" Type="Int32" />
+            <Parameter Name="breq" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_update_tables">
+            <Parameter Name="rid" Mode="In" Type="Int32" />
+            <Parameter Name="bid" Mode="In" Type="Int32" />
+            <Parameter Name="eid" Mode="In" Type="Int32" />
+            <Parameter Name="etype" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="LoginCredentials" EntityType="RecruitmentDBModel.LoginCredential" />
+          <FunctionImport Name="proc_login_signin" ReturnType="Collection(Int32)">
+            <Parameter Name="eid" Mode="In" Type="Int32" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+            <Parameter Name="etype" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_login_signup">
+            <Parameter Name="eid" Mode="In" Type="Int32" />
+            <Parameter Name="pass" Mode="In" Type="String" />
+            <Parameter Name="etype" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_display_requrests" ReturnType="Collection(RecruitmentDBModel.proc_display_requrests_Result)">
+          <Parameter Name="p_bid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_display_available_employees" ReturnType="Collection(RecruitmentDBModel.proc_display_available_employees_Result)" />
+          <FunctionImport Name="proc_display_pending_requests" ReturnType="Collection(RecruitmentDBModel.proc_display_pending_requests_Result)" />
+          <FunctionImport Name="Search_Details" ReturnType="Collection(RecruitmentDBModel.Search_Details_Result)">
+          <Parameter Name="input_text" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sort_Details" ReturnType="Collection(RecruitmentDBModel.Sort_Details_Result)">
+          <Parameter Name="input_text" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SortExperience" ReturnType="Collection(RecruitmentDBModel.SortExperience_Result)">
+          <Parameter Name="exp" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tbl_Hireingmanager" EntityType="RecruitmentDBModel.tbl_Hireingmanager" />
+          <FunctionImport Name="proc_requiredEmployee">
+            <Parameter Name="reqJava" Mode="InOut" Type="Int32" />
+            <Parameter Name="reqDotNet" Mode="InOut" Type="Int32" />
+            <Parameter Name="reqBA" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_updateHRTable">
+            <Parameter Name="reqJava" Mode="In" Type="Int32" />
+            <Parameter Name="reqDotNet" Mode="In" Type="Int32" />
+            <Parameter Name="reqBA" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="AssignedEmployees" EntityType="RecruitmentDBModel.AssignedEmployee" />
+          <AssociationSet Name="FK_AssignedEmployees_EmployeeDetails" Association="RecruitmentDBModel.FK_AssignedEmployees_EmployeeDetails">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="AssignedEmployee" EntitySet="AssignedEmployees" />
+          </AssociationSet>
+          <FunctionImport Name="proc_display_history_table" ReturnType="Collection(RecruitmentDBModel.proc_display_history_table_Result)" />
+          <FunctionImport Name="proc_display_team" ReturnType="Collection(RecruitmentDBModel.proc_display_team_Result)">
+          <Parameter Name="p_bid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_insert_history_table">
+            <Parameter Name="p_eid" Mode="In" Type="Int32" />
+            <Parameter Name="p_ename" Mode="In" Type="String" />
+            <Parameter Name="p_pbid" Mode="In" Type="Int32" />
+            <Parameter Name="p_cbid" Mode="In" Type="Int32" />
+            <Parameter Name="p_des" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_search_assigned_employee_details" ReturnType="Collection(RecruitmentDBModel.proc_search_assigned_employee_details_Result)">
+          <Parameter Name="p_text" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="proc_Search_Employee_Team" ReturnType="Collection(RecruitmentDBModel.proc_Search_Employee_Team_Result)">
+            <Parameter Name="p_text" Mode="In" Type="String" />
+            <Parameter Name="p_bid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="proc_user_details" ReturnType="Collection(RecruitmentDBModel.proc_user_details_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="proc_display_businessreq_Result">
+          <Property Type="Int32" Name="RequestId" Nullable="false" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="Int32" Name="JavaDevReq" Nullable="true" />
+          <Property Type="Int32" Name="DotNetDevReq" Nullable="true" />
+          <Property Type="Int32" Name="BAReq" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="proc_display_emp_table_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="JobExperience" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="LoginCredential">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmpType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="proc_display_requrests_Result">
+          <Property Type="Int32" Name="RequestId" Nullable="false" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="Int32" Name="JavaDevReq" Nullable="true" />
+          <Property Type="Int32" Name="DotNetDevReq" Nullable="true" />
+          <Property Type="Int32" Name="BAReq" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="proc_display_available_employees_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="JobExperience" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="proc_display_pending_requests_Result">
+          <Property Type="Int32" Name="RequestId" Nullable="false" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="Int32" Name="JavaDevReq" Nullable="true" />
+          <Property Type="Int32" Name="DotNetDevReq" Nullable="true" />
+          <Property Type="Int32" Name="BAReq" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Search_Details_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="JobExperience" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Sort_Details_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="JobExperience" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SortExperience_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="JobExperience" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="tbl_Hireingmanager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="java" Type="Int32" />
+          <Property Name="dotnet" Type="Int32" />
+          <Property Name="ba" Type="Int32" />
+        </EntityType>
+        <EntityType Name="AssignedEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+            <PropertyRef Name="EmpName" />
+            <PropertyRef Name="Previous_BId" />
+            <PropertyRef Name="Current_BId" />
+            <PropertyRef Name="Designation" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="EmpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Previous_BId" Type="Int32" Nullable="false" />
+          <Property Name="Current_BId" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="RecruitmentDBModel.FK_AssignedEmployees_EmployeeDetails" FromRole="AssignedEmployee" ToRole="EmployeeDetail" />
+        </EntityType>
+        <Association Name="FK_AssignedEmployees_EmployeeDetails">
+          <End Type="RecruitmentDBModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="1" />
+          <End Type="RecruitmentDBModel.AssignedEmployee" Role="AssignedEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="AssignedEmployee">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="proc_display_history_table_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Previous_BId" Nullable="false" />
+          <Property Type="Int32" Name="Current_BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="proc_display_team_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="JobExperience" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="proc_search_assigned_employee_details_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Previous_BId" Nullable="false" />
+          <Property Type="Int32" Name="Current_BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="proc_Search_Employee_Team_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BId" Nullable="false" />
+          <Property Type="String" Name="Designation" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="false" />
+          <Property Type="Int32" Name="JobExperience" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="proc_user_details_Result">
+          <Property Type="Int32" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmpType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmailId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EPassword" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RecruitmentDBModelStoreContainer" CdmEntityContainer="RecruitmentDBEntities">
+          <EntitySetMapping Name="BusinessUnitReqTables">
+            <EntityTypeMapping TypeName="RecruitmentDBModel.BusinessUnitReqTable">
+              <MappingFragment StoreEntitySet="BusinessUnitReqTable">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="JavaDevReq" ColumnName="JavaDevReq" />
+                <ScalarProperty Name="DotNetDevReq" ColumnName="DotNetDevReq" />
+                <ScalarProperty Name="BAReq" ColumnName="BAReq" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessUnitTables">
+            <EntityTypeMapping TypeName="RecruitmentDBModel.BusinessUnitTable">
+              <MappingFragment StoreEntitySet="BusinessUnitTable">
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="BName" ColumnName="BName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDetails">
+            <EntityTypeMapping TypeName="RecruitmentDBModel.EmployeeDetail">
+              <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="proc_add_bunit" FunctionName="RecruitmentDBModel.Store.proc_add_bunit" />
+          <FunctionImportMapping FunctionImportName="proc_add_employee" FunctionName="RecruitmentDBModel.Store.proc_add_employee" />
+          <FunctionImportMapping FunctionImportName="proc_delete_BReqTable" FunctionName="RecruitmentDBModel.Store.proc_delete_BReqTable" />
+          <FunctionImportMapping FunctionImportName="proc_display_businessreq" FunctionName="RecruitmentDBModel.Store.proc_display_businessreq">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_display_businessreq_Result">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="JavaDevReq" ColumnName="JavaDevReq" />
+                <ScalarProperty Name="DotNetDevReq" ColumnName="DotNetDevReq" />
+                <ScalarProperty Name="BAReq" ColumnName="BAReq" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_display_emp_table" FunctionName="RecruitmentDBModel.Store.proc_display_emp_table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_display_emp_table_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_insert_req" FunctionName="RecruitmentDBModel.Store.proc_insert_req" />
+          <FunctionImportMapping FunctionImportName="proc_update_tables" FunctionName="RecruitmentDBModel.Store.proc_update_tables" />
+          <EntitySetMapping Name="LoginCredentials">
+            <EntityTypeMapping TypeName="RecruitmentDBModel.LoginCredential">
+              <MappingFragment StoreEntitySet="LoginCredentials">
+                <ScalarProperty Name="EPassword" ColumnName="EPassword" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="EmpType" ColumnName="EmpType" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="proc_login_signin" FunctionName="RecruitmentDBModel.Store.proc_login_signin" />
+          <FunctionImportMapping FunctionImportName="proc_login_signup" FunctionName="RecruitmentDBModel.Store.proc_login_signup" />
+          <FunctionImportMapping FunctionImportName="proc_display_requrests" FunctionName="RecruitmentDBModel.Store.proc_display_requrests">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_display_requrests_Result">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="JavaDevReq" ColumnName="JavaDevReq" />
+                <ScalarProperty Name="DotNetDevReq" ColumnName="DotNetDevReq" />
+                <ScalarProperty Name="BAReq" ColumnName="BAReq" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_display_available_employees" FunctionName="RecruitmentDBModel.Store.proc_display_available_employees">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_display_available_employees_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_display_pending_requests" FunctionName="RecruitmentDBModel.Store.proc_display_pending_requests">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_display_pending_requests_Result">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="JavaDevReq" ColumnName="JavaDevReq" />
+                <ScalarProperty Name="DotNetDevReq" ColumnName="DotNetDevReq" />
+                <ScalarProperty Name="BAReq" ColumnName="BAReq" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Search_Details" FunctionName="RecruitmentDBModel.Store.Search_Details">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.Search_Details_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sort_Details" FunctionName="RecruitmentDBModel.Store.Sort_Details">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.Sort_Details_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SortExperience" FunctionName="RecruitmentDBModel.Store.SortExperience">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.SortExperience_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_Hireingmanager">
+            <EntityTypeMapping TypeName="RecruitmentDBModel.tbl_Hireingmanager">
+              <MappingFragment StoreEntitySet="tbl_Hireingmanager">
+                <ScalarProperty Name="ba" ColumnName="ba" />
+                <ScalarProperty Name="dotnet" ColumnName="dotnet" />
+                <ScalarProperty Name="java" ColumnName="java" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="proc_requiredEmployee" FunctionName="RecruitmentDBModel.Store.proc_requiredEmployee" />
+          <FunctionImportMapping FunctionImportName="proc_updateHRTable" FunctionName="RecruitmentDBModel.Store.proc_updateHRTable" />
+          <EntitySetMapping Name="AssignedEmployees">
+            <EntityTypeMapping TypeName="RecruitmentDBModel.AssignedEmployee">
+              <MappingFragment StoreEntitySet="AssignedEmployees">
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Current_BId" ColumnName="Current_BId" />
+                <ScalarProperty Name="Previous_BId" ColumnName="Previous_BId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="proc_display_history_table" FunctionName="RecruitmentDBModel.Store.proc_display_history_table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_display_history_table_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Previous_BId" ColumnName="Previous_BId" />
+                <ScalarProperty Name="Current_BId" ColumnName="Current_BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_display_team" FunctionName="RecruitmentDBModel.Store.proc_display_team">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_display_team_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_insert_history_table" FunctionName="RecruitmentDBModel.Store.proc_insert_history_table" />
+          <FunctionImportMapping FunctionImportName="proc_search_assigned_employee_details" FunctionName="RecruitmentDBModel.Store.proc_search_assigned_employee_details">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_search_assigned_employee_details_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Previous_BId" ColumnName="Previous_BId" />
+                <ScalarProperty Name="Current_BId" ColumnName="Current_BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_Search_Employee_Team" FunctionName="RecruitmentDBModel.Store.proc_Search_Employee_Team">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_Search_Employee_Team_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobExperience" ColumnName="JobExperience" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="proc_user_details" FunctionName="RecruitmentDBModel.Store.proc_user_details">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RecruitmentDBModel.proc_user_details_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmpType" ColumnName="EmpType" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="EPassword" ColumnName="EPassword" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,40 @@
+﻿ @{
+     ViewBag.Title = "ReqInput";
+}
+
+<link rel="stylesheet" href="~/Content/BUReqPage.css" />
+
+
+
+    @*<link rel="stylesheet" href="~/Content/slideshow.css" />*@
+    <form method="post" onsubmit="return func(this)">
+        <div>
+            <br />
+            <br />
+            <br />
+
+            <label id="l1">Business Unit</label>
+            <br />
+            <label>Java Developers</label>
+            <input id="p1" required type="number" min="0" placeholder="Requirements" class="form-control" style="width: 300px;" name="p_javareq" /><br />
+            <label>.Net Developers</label>
+            <input id="p2" required type="number" min="0" placeholder="Requirements" class="form-control" style="width: 300px;"  name="p_dotnetreq" /><br />
+            <label>Business Analyst</label>
+            <input id="p3" required type="number" min="0" placeholder="Requirements" class="form-control" style="width: 300px;" name="p_breq" /><br />
+
+            <br />
+            <button type="submit" class="btn btn-primary">Request</button>
+        </div>
+    </form>
+
+<script>
+    function func()
+    {
+        if ($('#p1').val() == 0 && $('#p2').val() == 0 && $('#p2').val() == 0) {
+            alert("Request cannot be Null, please enter a positive value");
+            return false;
+        }
+        else
+            return true;
+    }
+</script>
